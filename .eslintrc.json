@@ -1,3 +1,39 @@
 {
-  "extends": "next/core-web-vitals"
+    "env": {
+        "browser": true,
+        "es2021": true
+    },
+    "plugins": [
+        "@emotion",
+        "@typescript-eslint"
+    ],
+    "extends": [
+        "eslint:recommended",
+        "next",
+        "plugin:@typescript-eslint/recommended",
+        "prettier"
+    ],
+    "parser": "@typescript-eslint/parser",
+    "parserOptions": {
+        "ecmaFeatures": {
+            "jsx": true
+        },
+        "ecmaVersion": 2021,
+        "sourceType": "module"
+    },
+    "rules": {
+        "react/react-in-jsx-scope": "off",
+        "no-console": "error",
+        "no-empty": "error",
+        "no-empty-function": "error",
+        "no-unused-expressions": "error",
+        "no-unused-vars": "error",
+        "no-useless-constructor": "error",
+        "react/jsx-uses-react": "error",
+        "prefer-const": "warn",
+        "react/jsx-uses-vars": "error",
+        "space-before-function-paren": "off",
+        "comma-dangle": "off",
+        "no-use-before-define": "off"
+    }
 }
