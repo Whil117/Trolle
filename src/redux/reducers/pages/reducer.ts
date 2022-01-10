@@ -1,6 +1,6 @@
 export const initState = []
 
-type ListItem = {
+export type ListItem = {
   id?: string
   id_item: string
   title_item: string
@@ -38,6 +38,48 @@ const TypesReducers = {
                   title_item: payload.title_item,
                 },
               ],
+        }
+      }
+      return list
+    })
+  },
+  ADD_DESCRIPTION_ITEM: (state: State[], payload: ListItem) => {
+    return state.map((list) => {
+      if (list.id === payload.id) {
+        return {
+          ...list,
+          list: list.list
+            ? list.list.map((item) => {
+                if (item.id_item === payload.id_item) {
+                  return {
+                    ...item,
+                    description_item: payload.description_item,
+                  }
+                }
+                return item
+              })
+            : [],
+        }
+      }
+      return list
+    })
+  },
+  ADD_IMAGE_ITEM: (state: State[], payload: ListItem) => {
+    return state.map((list) => {
+      if (list.id === payload.id) {
+        return {
+          ...list,
+          list:
+            list.list &&
+            list.list.map((item) => {
+              if (item.id_item === payload.id_item) {
+                return {
+                  ...item,
+                  image_item: payload.image_item,
+                }
+              }
+              return item
+            }),
         }
       }
       return list

@@ -12,6 +12,7 @@ const ButtonComponent: FC<IProps> = (props) => {
   return (
     <ButtonStyle onClick={props.click} customStyle={props.style}>
       {props.buttonName}
+      {props.children}
     </ButtonStyle>
   )
 }

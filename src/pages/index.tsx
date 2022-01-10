@@ -22,7 +22,7 @@ const Index: NextPage = () => {
         `}
       >
         {list?.map((section) => (
-          <Column {...{ section }} />
+          <Column key={section.id} {...{ section }} />
         ))}
         {show ? (
           <AddNewItem
@@ -32,7 +32,7 @@ const Index: NextPage = () => {
               dispatch({
                 type: 'ADD_LIST',
                 payload: {
-                  id: randomId(10),
+                  id: randomId(20),
                   title_list: values.name,
                 },
               })

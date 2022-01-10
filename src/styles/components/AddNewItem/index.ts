@@ -24,6 +24,7 @@ export const AddNewItemFormInput = styled(Field)`
   outline: none;
   margin:0 0 10px 0;
     font-size: 16px;
+    padding: 5px 10px;
   ${({ customStyle }: CustomStyled) => customStyle})}
 `
 
