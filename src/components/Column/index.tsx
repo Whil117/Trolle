@@ -5,12 +5,14 @@ import { css } from '@emotion/react'
 import AppContext from '@Hooks/AppContext/AppContext'
 import { State } from '@Redux/reducers/pages/reducer'
 import { ColumnStyle } from '@Styles/components/Column'
+import colors from '@Styles/global/colors'
 import randomId from '@Utils/random_id/random_id'
 import { useRouter } from 'next/router'
 import { FC, useContext, useState } from 'react'
 
 interface IProps {
   section: State
+  id?: string | string[] | undefined
 }
 
 const Column: FC<IProps> = (props) => {
@@ -26,13 +28,20 @@ const Column: FC<IProps> = (props) => {
             key={item.id_item}
             buttonName={item.title_item}
             style={css`
-              background: #ffffff;
-              font-size: 1rem;
+              background: ${item.id_item === props.id
+                ? colors.background?.primary
+                : 'white'};
+              color: ${item.id_item === props.id
+                ? colors.text?.primary
+                : 'black'};
+              font-weight: 600;
+              font-size: 1.1rem;
               font-weight: 00;
               margin: 0.5rem 0;
               display: flex;
               flex-direction: column;
               height: 100%;
+              padding: 1rem;
             `}
             click={() =>
               router.push({
@@ -49,7 +58,10 @@ const Column: FC<IProps> = (props) => {
                 src={item.image_item}
                 alt={item.title_item}
                 width={350}
-                height={300}
+                height={200}
+                CustomStyle={css`
+                  object-position: top;
+                `}
               />
             )}
           </ButtonComponent>

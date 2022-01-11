@@ -17,5 +17,9 @@ const colors: Colors = {
   text: {
     primary: 'white',
   },
+  background: {
+    primary: '#2C5CD7',
+    secondary: '#2CD7C2',
+  },
 }
 export default colors

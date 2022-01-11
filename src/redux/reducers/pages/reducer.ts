@@ -1,4 +1,22 @@
+import { listenerCount } from 'process'
+
 export const initState = []
+
+export type checkList = {
+  id: string
+  title: string
+  checked: boolean
+}
+
+export type Checklists = {
+  id_list?: string
+  id_list_item?: string
+  id_checklist?: string
+  id_checklist_item?: string
+  title_checklist_item?: string
+  title_checklist: string
+  checklist?: Array<checkList>
+}
 
 export type ListItem = {
   id?: string
@@ -7,6 +25,7 @@ export type ListItem = {
   description_item?: string
   image_item?: string
   completed?: boolean
+  checklists?: Array<Checklists>
 }
 
 export type State = {
@@ -76,6 +95,106 @@ const TypesReducers = {
                 return {
                   ...item,
                   image_item: payload.image_item,
+                }
+              }
+              return item
+            }),
+        }
+      }
+      return list
+    })
+  },
+  UPLOAD_TITLE_ITEM: (state: State[], payload: ListItem) => {
+    return state.map((item) => {
+      if (item.id === payload.id) {
+        return {
+          ...item,
+          list:
+            item.list &&
+            item.list.map((item) => {
+              if (item.id_item === payload.id_item) {
+                return {
+                  ...item,
+                  title_item: payload.title_item,
+                }
+              }
+
+              return item
+            }),
+        }
+      }
+      return item
+    })
+  },
+  ADD_CHECKLIST: (state: State[], payload: Checklists) => {
+    return state.map((list) => {
+      if (list.id === payload.id_list) {
+        return {
+          ...list,
+          list:
+            list.list &&
+            list.list.map((item) => {
+              if (item.id_item === payload.id_list_item) {
+                return {
+                  ...item,
+                  checklists: item.checklists
+                    ? [
+                        ...item.checklists,
+                        {
+                          id_checklist: payload.id_checklist,
+                          title_checklist: payload.title_checklist,
+                        },
+                      ]
+                    : [
+                        {
+                          id_checklist: payload.id_checklist,
+                          title_checklist: payload.title_checklist,
+                        },
+                      ],
+                }
+              }
+              return item
+            }),
+        }
+      }
+      return list
+    })
+  },
+  ADD_CHECKLIST_ITEM: (state: State[], payload: Checklists) => {
+    return state.map((list) => {
+      if (list.id === payload.id_list) {
+        return {
+          ...list,
+          list:
+            list.list &&
+            list.list.map((item) => {
+              if (item.id_item === payload.id_list_item) {
+                return {
+                  ...item,
+                  checklists:
+                    item.checklists &&
+                    item.checklists.map((checklist) => {
+                      if (checklist.id_checklist === payload.id_checklist) {
+                        return {
+                          ...checklist,
+                          checklist: checklist.checklist
+                            ? [
+                                ...checklist.checklist,
+                                {
+                                  id: payload.id_checklist_item,
+                                  title: payload.title_checklist_item,
+                                },
+                              ]
+                            : [
+                                {
+                                  id: payload.id_checklist_item,
+                                  title: payload.title_checklist_item,
+                                },
+                              ],
+                        }
+                      }
+                      return checklist
+                    }),
                 }
               }
               return item

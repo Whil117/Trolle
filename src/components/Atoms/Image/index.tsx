@@ -14,7 +14,7 @@ interface IProps {
 
 export const ImageWrapper = styled(Image)<CustomStyle>`
   object-fit: cover;
-  border-radius: 5px;
+  border-radius: 10px;
   ${({ customStyle }) => customStyle}
 `
 
