@@ -1,5 +1,3 @@
-import { listenerCount } from 'process'
-
 export const initState = []
 
 export type checkList = {
@@ -10,6 +8,7 @@ export type checkList = {
 }
 
 export type Checklists = {
+  id?: string
   id_list?: string
   id_list_item?: string
   id_checklist?: string
@@ -26,7 +25,6 @@ export type ListItem = {
   title_item: string
   description_item?: string
   image_item?: string
-  completed?: boolean
   checklists?: Array<Checklists>
 }
 
@@ -169,48 +167,45 @@ const TypesReducers = {
     })
   },
   ADD_CHECKLIST_ITEM: (state: State[], payload: Checklists) => {
-    return state.map((list) => {
-      if (list.id === payload.id_list) {
-        return {
-          ...list,
-          list:
-            list.list &&
-            list.list.map((item) => {
-              if (item.id_item === payload.id_list_item) {
-                return {
-                  ...item,
-                  checklists:
-                    item.checklists &&
-                    item.checklists.map((checklist) => {
-                      if (checklist.id_checklist === payload.id_checklist) {
-                        return {
-                          ...checklist,
-                          checklist: checklist.checklist
-                            ? [
-                                ...checklist.checklist,
-                                {
-                                  id: payload.id_checklist_item,
-                                  title: payload.title_checklist_item,
-                                },
-                              ]
-                            : [
-                                {
-                                  id: payload.id_checklist_item,
-                                  title: payload.title_checklist_item,
-                                },
-                              ],
-                        }
+    return state.map((list) =>
+      list.id === payload.id_list
+        ? {
+            ...list,
+            list: list.list
+              ? list.list.map((listItem) =>
+                  listItem.id_item === payload.id_list_item
+                    ? {
+                        ...listItem,
+                        checklists: listItem.checklists
+                          ? listItem.checklists?.map((checklist) =>
+                              checklist.id_checklist === payload.id_checklist
+                                ? {
+                                    ...checklist,
+                                    checklist: checklist.checklist
+                                      ? [
+                                          ...checklist.checklist,
+                                          {
+                                            id: payload.id_checklist_item,
+                                            title: payload.title_checklist_item,
+                                          },
+                                        ]
+                                      : [
+                                          {
+                                            id: payload.id_checklist_item,
+                                            title: payload.title_checklist_item,
+                                          },
+                                        ],
+                                  }
+                                : checklist
+                            )
+                          : [],
                       }
-                      return checklist
-                    }),
-                }
-              }
-              return item
-            }),
-        }
-      }
-      return list
-    })
+                    : listItem
+                )
+              : [],
+          }
+        : list
+    )
   },
   REORDER: (
     state: State[],
@@ -232,7 +227,7 @@ export type Action = {
   type: keyof typeof TypesReducers
   payload: any
 }
-export const reducer = (state: State[], action: Action) => {
+export const reducer = (state: State[] | any, action: Action) => {
   const { type, payload } = action
   const handler = TypesReducers[type]
   const newState = handler ? handler(state, payload) : state

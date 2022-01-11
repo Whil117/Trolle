@@ -13,7 +13,7 @@ import { FC, useContext, useState } from 'react'
 interface IProps {
   section: State
   id?: string | string[] | undefined
-  draggableProvided: any
+  draggableProvided?: any
 }
 
 const Column: FC<IProps> = (props) => {

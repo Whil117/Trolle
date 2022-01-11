@@ -3,12 +3,11 @@ import ButtonComponent from '@Components/Button'
 import Column from '@Components/Column'
 import { css } from '@emotion/react'
 import AppContext from '@Hooks/AppContext/AppContext'
-import { State } from '@Redux/reducers/pages/reducer'
 import { WrapperStyle } from '@Styles/atoms/styles'
 import randomId from '@Utils/random_id/random_id'
 import type { NextPage } from 'next'
 import { useContext, useState } from 'react'
-import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
+import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd'
 
 const Index: NextPage = () => {
   const [show, setShow] = useState(false)
@@ -44,7 +43,6 @@ const Index: NextPage = () => {
           customStyle={css`
             display: flex;
             align-items: flex-start;
-            /* flex-wrap: wrap; */
           `}
         >
           <Droppable droppableId="task" direction="horizontal">
