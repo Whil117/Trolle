@@ -13,6 +13,7 @@ import { FC, useContext, useState } from 'react'
 interface IProps {
   section: State
   id?: string | string[] | undefined
+  draggableProvided: any
 }
 
 const Column: FC<IProps> = (props) => {
@@ -20,7 +21,11 @@ const Column: FC<IProps> = (props) => {
   const { dispatch } = useContext(AppContext)
   const router = useRouter()
   return (
-    <ColumnStyle>
+    <ColumnStyle
+      ref={props.draggableProvided?.innerRef}
+      {...props.draggableProvided?.draggableProps}
+      {...props.draggableProvided?.dragHandleProps}
+    >
       <h4>{props.section.title_list}</h4>
       <div>
         {props?.section?.list?.map((item) => (

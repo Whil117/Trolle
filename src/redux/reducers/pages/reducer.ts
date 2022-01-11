@@ -5,6 +5,7 @@ export const initState = []
 export type checkList = {
   id: string
   title: string
+  title_list?: string
   checked: boolean
 }
 
@@ -13,6 +14,7 @@ export type Checklists = {
   id_list_item?: string
   id_checklist?: string
   id_checklist_item?: string
+  title_list?: string
   title_checklist_item?: string
   title_checklist: string
   checklist?: Array<checkList>
@@ -32,6 +34,12 @@ export type State = {
   id: string
   title_list: string
   list?: Array<ListItem>
+}
+const reorder = (list: State[], startIndex: number, endIndex: number) => {
+  const result = [...list]
+  const [removed] = result.splice(startIndex, 1)
+  result.splice(endIndex, 0, removed)
+  return result
 }
 
 const TypesReducers = {
@@ -204,10 +212,25 @@ const TypesReducers = {
       return list
     })
   },
+  REORDER: (
+    state: State[],
+    payload: {
+      source: {
+        index: number
+        droppableId: string
+      }
+      destination: {
+        index: number
+        droppableId: string
+      }
+    }
+  ) => {
+    return reorder(state, payload.source.index, payload.destination.index)
+  },
 }
 export type Action = {
   type: keyof typeof TypesReducers
-  payload: State | any
+  payload: any
 }
 export const reducer = (state: State[], action: Action) => {
   const { type, payload } = action
